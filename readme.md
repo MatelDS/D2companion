@@ -1,4 +1,4 @@
-#GANcompressor
+# GANcompressor
 
 Compression of images using GANs. The setup is basically an Autoencoder with a latent layer:
 
