@@ -9,7 +9,7 @@ import mouse
 import keyboard
 import time
 
-def getMloc(wndloc, resolution):
+def get_mloc(wndloc, resolution):
     '''returns relative mouse location.
     
     Input:
@@ -31,13 +31,14 @@ def getMloc(wndloc, resolution):
     else:
         return (0,0)
     
-def Mmove(target, wndloc, resolution):
+def move_m(target, wndloc, resolution):
     '''Moves Mouse to target Screen Location
     
     Input:
         target - Tuple(x,y) of relative coordinates (Width,Height):values between 0 and 1
         wndloc - Tuple(x,y) of pixel coordinates of upper left window corner (Horizontal,Vertical)
         resolution - Tuple(x,y) of image resolution (Width,Height)
+    
     Output:
         error - boolean'''
         
@@ -56,7 +57,39 @@ def Mmove(target, wndloc, resolution):
         
     return error
 
-def Mlisten(duration, wndloc, resolution):
+def input_m(key, movefirst=False, target=(0,0), wndloc=(0,0), resolution=(640,480)):
+    '''Mouseclick Action. 
+    
+    Input:
+        key - string: "lmb" or "rmb".
+        movefirst - boolean. If True a move_m() action will be made before clicking.
+        target - Tuple(x,y) of relative move position. Only needed if movefirst is True.
+        wndloc - Tuple(x,y) of pixel coordinates of upper left window corner (Horizontal,Vertical). Only needed if movefirst is True.
+        resolution - Tuple(x,y) of image resolution (Width,Height). Only needed if movefirst is True.
+    
+    Output:
+        error - boolean'''
+
+    error = False
+    
+    if movefirst:
+        error = move_m(target, wndloc, resolution)
+        if error:
+            return error
+    
+    try:
+        if key == "lmb":
+            mouse.click("left")
+        elif key == "rmb":
+            mouse.click("right")
+        else:
+            error = True
+    except:
+        error = True
+ 
+    return error
+
+def listen_m(duration, wndloc, resolution):
     '''listen for mouse events and return last event after duration passed
     
     Input:
@@ -74,20 +107,20 @@ def Mlisten(duration, wndloc, resolution):
     t_end = time.time() + duration
     while time.time() < t_end:
         if mouse.is_pressed(button="left"):
-            loc = getMloc(wndloc, resolution)
+            loc = get_mloc(wndloc, resolution)
             if loc != (0,0):
                 mevent = "lmb"
                 mloc = loc
                 
         if mouse.is_pressed(button="right"):
-            loc = getMloc(wndloc, resolution)
+            loc = get_mloc(wndloc, resolution)
             if loc != (0,0):
                 mevent = "rmb"
                 mloc = loc
     
     return mevent, mloc
 
-def MKlisten(duration, wndloc, resolution):
+def listen_mk(duration, wndloc, resolution):
     '''listen for mouse and keyboard events and return last events after duration passed
     
     Input:
@@ -107,13 +140,13 @@ def MKlisten(duration, wndloc, resolution):
     keyboard.start_recording()
     while time.time() < t_end:
         if mouse.is_pressed(button="left"):
-            loc = getMloc(wndloc, resolution)
+            loc = get_mloc(wndloc, resolution)
             if loc != (0,0):
                 mevent = "lmb"
                 mloc = loc
                 
         if mouse.is_pressed(button="right"):
-            loc = getMloc(wndloc, resolution)
+            loc = get_mloc(wndloc, resolution)
             if loc != (0,0):
                 mevent = "rmb"
                 mloc = loc
@@ -127,7 +160,7 @@ def MKlisten(duration, wndloc, resolution):
     
     return mevent, mloc, kevent
 
-def Klisten(duration):
+def listen_k(duration):
     '''listen for keyboard events and return last event after duration passed
     
     Input:
@@ -150,7 +183,7 @@ def Klisten(duration):
         event = events[-1].name
         return event
     
-def Kinput(key, allowedkeys=[]):
+def input_k(key, allowedkeys=[]):
     '''simple keyboard event
     
     Input:
@@ -172,9 +205,3 @@ def Kinput(key, allowedkeys=[]):
             
     except:
         return True
-    
-duration = 5
-wndloc = (0,0)
-resolution = (1920,1024)
-time.sleep(1)
-print(Mlisten(duration, wndloc, resolution))

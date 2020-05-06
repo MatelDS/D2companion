@@ -9,7 +9,7 @@ import win32ui
 from ctypes import windll
 from PIL import Image
 
-def getScreen(wndname="Diablo II", onlyarea=True):
+def get_screen(wndname="Diablo II", onlyarea=True):
     '''Make Screenshot of running window.
     Input: wndname - String of Windowname
     
