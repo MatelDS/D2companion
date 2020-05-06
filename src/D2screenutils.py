@@ -22,14 +22,17 @@ def get_screen(wndname="Diablo II", onlyarea=True):
     
     try:
         hwnd = win32gui.FindWindow(None, 'Diablo II')
+
+        left, top, right, bot = win32gui.GetClientRect(hwnd)
+        cleft, ctop, cright, cbot = win32gui.GetWindowRect(hwnd)
         
         #whole window or just the client area.
         if onlyarea:
-            left, top, right, bot = win32gui.GetClientRect(hwnd)
+            w = right - left
+            h = bot - top
         else:
-            left, top, right, bot = win32gui.GetWindowRect(hwnd)
-        w = right - left
-        h = bot - top
+            w = cright - cleft
+            h = cbot - ctop
         
         hwndDC = win32gui.GetWindowDC(hwnd)
         mfcDC  = win32ui.CreateDCFromHandle(hwndDC)
@@ -61,7 +64,7 @@ def get_screen(wndname="Diablo II", onlyarea=True):
         win32gui.ReleaseDC(hwnd, hwndDC)
         
         imsize = (im.width, im.height)
-        clientloc = (left,top)
+        clientloc = (cleft,ctop)
     except:
         result = 0
         print("Error while taking Screenshot.")
