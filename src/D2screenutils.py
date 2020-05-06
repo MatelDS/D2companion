@@ -9,22 +9,25 @@ import win32ui
 from ctypes import windll
 from PIL import Image
 
-def getScreen(wndname="Diablo II"):
+def getScreen(wndname="Diablo II", onlyarea=True):
     '''Make Screenshot of running window.
     Input: wndname - String of Windowname
     
     Returns (Error, Imagesize, Image)
         Error - Boolean
-        Imagesize - Tuple(width,Height)
-        Image - PIL-Image object'''
+        Image - PIL-Image object
+        Imagesize - Tuple(x,y) size of the image in form (Width,Height)
+        windowlocation - Tuple(x,y) location of the upper left window corner
+        '''
     
     try:
         hwnd = win32gui.FindWindow(None, 'Diablo II')
         
-        # Change the line below depending on whether you want the whole window
-        # or just the client area. 
-        left, top, right, bot = win32gui.GetClientRect(hwnd)
-        #left, top, right, bot = win32gui.GetWindowRect(hwnd)
+        #whole window or just the client area.
+        if onlyarea:
+            left, top, right, bot = win32gui.GetClientRect(hwnd)
+        else:
+            left, top, right, bot = win32gui.GetWindowRect(hwnd)
         w = right - left
         h = bot - top
         
@@ -37,10 +40,11 @@ def getScreen(wndname="Diablo II"):
         
         saveDC.SelectObject(saveBitMap)
         
-        # Change the line below depending on whether you want the whole window
-        # or just the client area. 
-        result = windll.user32.PrintWindow(hwnd, saveDC.GetSafeHdc(), 1)
-        #result = windll.user32.PrintWindow(hwnd, saveDC.GetSafeHdc(), 0)
+        #whole window or just the client area.
+        if onlyarea:
+            result = windll.user32.PrintWindow(hwnd, saveDC.GetSafeHdc(), 1)
+        else:
+            result = windll.user32.PrintWindow(hwnd, saveDC.GetSafeHdc(), 0)
         #print(result)
         
         bmpinfo = saveBitMap.GetInfo()
@@ -57,6 +61,7 @@ def getScreen(wndname="Diablo II"):
         win32gui.ReleaseDC(hwnd, hwndDC)
         
         imsize = (im.width, im.height)
+        clientloc = (left,top)
     except:
         result = 0
         print("Error while taking Screenshot.")
@@ -64,8 +69,8 @@ def getScreen(wndname="Diablo II"):
     finally:
         if result == 1:
             #PrintWindow Succeeded, return Image and Size
-            return False, imsize, im
+            return False, im, imsize, clientloc
         
         else:
             #PrintWindow failed, return error=True
-            return True, (0,0), None
+            return True, None, (0,0), (0,0)
