@@ -73,20 +73,3 @@ def record_timed_split(minutes, seconds, sessionloc, frameduration=0.25, split =
     
     except:
         return True
-
-minutes = 5
-seconds = 0
-frameduration = 0.25
-
-char = "assa"
-splits = ["den"]
-
-sessionloc = create_folders(char, splits)
-
-for split in splits:
-    err = record_timed_split(minutes, seconds, sessionloc, frameduration, split)
-    
-if err:
-    print("Error: Session stoped.")
-else:
-    print(f"Recording completed./n The data was saved in/n {sessionloc}")
