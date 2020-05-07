@@ -27,11 +27,11 @@ def capture_frame(duration):
     
     return image, image_size, mkactions
 
-minutes = 10
+minutes = 5
 frameduration = 0.25
 
 char = "ama"
-sessionNR = 1
+sessionNR = 12
 split = "den"
 
 folders = ["data", f"{char}", f"{sessionNR}", f"{split}"]
@@ -64,4 +64,4 @@ while time.time()<t_end:
 d2io.stop_listener(mlistener)
 d2io.stop_listener(klistener)
     
-df.to_csv(os.path.join(saveloc, f"{split}.csv"))
+df.to_csv(os.path.join(saveloc, f"input.csv"))
