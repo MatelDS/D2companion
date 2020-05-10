@@ -6,140 +6,148 @@ Created on Wed May  6 10:22:27 2020
 """
 
 from pynput import mouse, keyboard
-import time
+from d2screen import d2screen
 
-def start_mouse_listener():
-    global loc, mbutton  
-    
-    def mouse_update(x, y, button, pressed):      
-        global loc, mbutton
-        loc = (x,y)
-        if button == mouse.Button.left:
-            mbutton = "lmb"
-        elif button == mouse.Button.right:
-            mbutton = "rmb"
-    
-    loc = (0,0)
-    mbutton = None
-    
-    mcontroller = mouse.Controller()
-    mlistener = mouse.Listener(on_click=mouse_update)
-    mlistener.start()
-            
-    return mcontroller, mlistener, loc, mbutton
+class d2mouse:
+    def __init__(self, wndname="Diablo II", dpiaware=False):                
+        self.controller = mouse.Controller()
+        self.mbutton = None
+        self.loc = (0,0)
+        self.rloc = (0,0)
+        self.wndname = "Diablo II"
+        self.dpiaware = dpiaware
+        self.mscreen = d2screen(self.wndname, dpiaware=self.dpiaware)
+        self.update_window_position()
 
-def start_keyboard_listener():  
-    global kkey
-    
-    def update_key(key):
-        global kkey
-        kkey = key
-    
-    kkey = None        
-    kcontroller = keyboard.Controller()
-    klistener = keyboard.Listener(on_press=update_key)
-    klistener.start()
-            
-    return kcontroller, klistener, kkey
+    def start_listener(self):     
+        def mouse_update(x, y, button, pressed):
+            self.loc = (x,y)            
+            self.update_window_position()
+            if self.get_rloc() != (0,0):
+                self.rloc = self.get_rloc()
+                if button == mouse.Button.left:
+                    self.mbutton = "lmb"
+                elif button == mouse.Button.right:
+                    self.mbutton = "rmb"
 
-def stop_listener(listener):
-    listener.stop()
-    return True
-
-def get_rloc(mcontroller, wndloc, resolution):
-    '''returns relative mouse location.
+        self.listener = mouse.Listener(on_click=mouse_update)
+        self.listener.start()
     
-    Input:
-        wndloc - Tuple(x,y) of pixel coordinates of upper left window corner (Horizontal,Vertical)
-        resolution - Tuple(x,y) of image resolution (Width,Height)
-    
-    Output:
-        location - Tuple(x,y) with location relative to windowlocation and screensize.
-            x and y are values between 0 and 1
-            
-    returns (0,0) when the cursor is outside of window area.'''
-    
-    loc = mcontroller.position
-    x = (loc[0] - wndloc[0])/resolution[0]
-    y = (loc[1] - wndloc[1])/resolution[1]
-    
-    if (x >= 0 and x<=1) and (y>=0 and y<=1):
-        return (x,y)
-    else:
-        return (0,0)
-    
-def convert_loc_to_rloc(loc, wndloc, resolution):
-    '''converts absolute mouse position to relative mouse position.
-    
-    Input:
-        mloc - Tuple(x,y) absolute mouse position
-        wndloc - Tuple(x,y) pixel coordinates of upper left window corner (Horizontal,Vertical)
-        resolution - Tuple(x,y) image resolution (Width,Height)
-    
-    Output:
-        location - Tuple(x,y) inside screen (relative) mouse location.
-                x and y are values between 0 and 1
-            
-    returns (0,0) when the cursor is outside of window area.'''
-    
-    x = (loc[0] - wndloc[0])/resolution[0]
-    y = (loc[1] - wndloc[1])/resolution[1]
-    
-    if (x >= 0 and x<=1) and (y>=0 and y<=1):
-        return (x,y)
-    else:
-        return (0,0)
-    
-def convert_rloc_to_loc(rloc, wndloc, resolution):
-    '''converts relative mouse position to absolute mouse position.
-    
-    Input:
-        relmloc - Tuple(x,y) rinside screen (relative) mouse position
-        wndloc - Tuple(x,y) pixel coordinates of upper left window corner (Horizontal,Vertical)
-        resolution - Tuple(x,y) image resolution (Width,Height)
-    
-    Output:
-        location - Tuple(x,y) absolute mouse location.
-                x and y are values between 0 and 1
-            
-    returns (0,0) when the cursor is outside of window area.'''
-    
-    x = int(rloc[0]*resolution[0] + wndloc[0])
-    y = int(rloc[1]*resolution[1] + wndloc[1])
-    
-    if (x >= 0 and x<=1) and (y>=0 and y<=1):
-        return (x, y)
-    else:
-        return (0,0)
-
-def listen_mk(duration, wndloc, resolution, allowedkeys=[]):
-    '''listen for mouse and keyboard events and return last events after duration passed
-    
-    Input:
-        duration - time to listen for events in seconds
-        wndloc - Tuple(x,y) of pixel coordinates of upper left window corner (Horizontal,Vertical)
-        resolution - Tuple(x,y) of image resolution (Width,Height)
-        allowedkeys - list of strings. only keyboard inputs in this list will be recorded.
+    def stop_listener(self):
+        self.listener.stop()
         
-    Output:
-        mevent - string. last occured Mouse-Event: "lmb", "rmb" or None
-        rloc - Tuple(x,y) relative mouse position at time of last mouse-event. (0,0) if no mouse-event happened.
-        kevent - string of last pressed key. None if no event occured'''
-    global loc, mbutton, kkey
-    loc = (0,0)
-    mbutton, kkey = None, None
+    def reset(self):
+        self.mbutton = None
+        self.loc = (0,0)
+        self.rloc = (0,0)
+        
+    def update_window_position(self):
+        self.wndloc, self.wndsize = self.mscreen.get_window_location()
+        
+    def get_rloc(self):
+        '''returns relative mouse location (inside gamescreen area).
+        
+        Output:
+            location - Tuple(x,y) with location relative to windowlocation and screensize.
+                returns (0,0) when the cursor is outside of window area.'''
+        
+        x = (self.loc[0] - self.wndloc[0])/self.wndsize[0]
+        y = (self.loc[1] - self.wndloc[1])/self.wndsize[1]
+        
+        if (x >= 0 and x<=1) and (y>=0 and y<=1):
+            return (x,y)
+        else:
+            return (0,0)
+        
+    def convert_loc_to_rloc(self, loc):
+        '''converts absolute mouse position to relative mouse position.
+        
+        Input:
+            mloc - Tuple(x,y) absolute mouse position
+        
+        Output:
+            location - Tuple(x,y) inside screen (relative) mouse location.
+                    x and y are values between 0 and 1
+                
+                returns (0,0) when the cursor is outside of window area.'''
+                
+        x = (loc[0] - self.wndloc[0])/self.wndsize[0]
+        y = (loc[1] - self.wndloc[1])/self.wndsize[1]
+        
+        if (x >= 0 and x<=1) and (y>=0 and y<=1):
+            return (x,y)
+        else:
+            return (0,0)
     
-    rloc = (0,0)
-    mevent = None
-    kevent = None
+    def convert_rloc_to_loc(self, rloc):
+        '''converts relative mouse position to absolute mouse position.
+        
+        Input:
+            relmloc - Tuple(x,y) rinside screen (relative) mouse position
+            wndloc - Tuple(x,y) pixel coordinates of upper left window corner (Horizontal,Vertical)
+            resolution - Tuple(x,y) image resolution (Width,Height)
+        
+        Output:
+            location - Tuple(x,y) absolute mouse location.
+                    x and y are values between 0 and 1
+                
+        returns (0,0) when the cursor is outside of window area.'''
+        
+        x = int(rloc[0]*self.wndsize[0] + self.wndloc[0])
+        y = int(rloc[1]*self.wndsize[1] + self.wndloc[1])
+        
+        if (x >= 0 and x<=1) and (y>=0 and y<=1):
+            return (x, y)
+        else:
+            return (0,0)
+        
+    def check_functionality(self): 
+        def on_move(x, y):
+            self.update_window_position()
+            print(f"loc:({x},{y}); rloc:{self.convert_loc_to_rloc((x,y))}")
+            
+        self.listener = mouse.Listener(on_move=on_move)
+        self.listener.start()
+        
+class d2keyboard:
+    def __init__(self, allowedkeys=[]):              
+        self.controller = keyboard.Controller()
+        self.allowedkeys = allowedkeys
+        self.kkey = None
+        
+    def start_listener(self):  
+        def update_key(key):
+            key_value = None
+            
+            if key is None:
+                pass
+            else:
+                try:
+                    key_value = key.char
+                except:
+                    key_value = key.name
+                finally:
+                    if len(self.allowedkeys)==0 or key_value in self.allowedkeys:
+                        self.kkey = key_value
 
-    time.sleep(duration)
+        self.listener = keyboard.Listener(on_press=update_key)
+        self.listener.start()
+
+    def stop_listener(self):
+        self.listener.stop()
+        
+    def reset(self):
+        self.kkey = None
     
-    if convert_loc_to_rloc(loc, wndloc, resolution) != (0,0):
-        rloc = convert_loc_to_rloc(loc, wndloc, resolution)
-        mevent = mbutton
-    
-    if len(allowedkeys)==0 or kkey in allowedkeys:
-        kevent = kkey
-    
-    return mevent, rloc, kevent
+    def reset_allowedkeys(self):
+        self.allowedkeys = []
+        
+    def allow_keys(self, *args):
+        for item in args:
+            if type(item) is str:
+                self.allowedkeys.append(item)
+            
+            elif type(item) is list:
+                for litem in item:
+                    if type(litem) is str:
+                        self.allowedkeys.append(litem)

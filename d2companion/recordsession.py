@@ -5,7 +5,7 @@ Created on Thu May  7 18:37:37 2020
 @author: MatelDS
 """
 
-from d2utilities import d2record
+from d2utilities.d2session import d2session
 
 minutes = 5
 seconds = 0
@@ -14,12 +14,9 @@ frameduration = 0.25
 char = "assa"
 splits = ["den"]
 
-sessionloc = d2record.create_folders(char, splits)
+sess = d2session(char=char, splits=splits, frameduration=frameduration, dpiaware=True)
 
-for split in splits:
-    err = d2record.record_timed_split(minutes, seconds, sessionloc, frameduration, split)
-    
-if err:
-    print("Error: Session stoped.")
-else:
-    print(f"Recording completed./n The data was saved in/n {sessionloc}")
+sess.add_minutes(minutes)
+sess.add_seconds(seconds)
+
+sess.record_all_splits()
