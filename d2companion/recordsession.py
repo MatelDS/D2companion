@@ -5,18 +5,12 @@ Created on Thu May  7 18:37:37 2020
 @author: MatelDS
 """
 
-from d2utilities.d2session import d2session
+from PyQt5 import QtWidgets
+import sys
 
-minutes = 5
-seconds = 0
-frameduration = 0.25
+from gui.d2recordergui import d2recorderui
 
-char = "assa"
-splits = ["den"]
-
-sess = d2session(char=char, splits=splits, frameduration=frameduration, dpiaware=True)
-
-sess.add_minutes(minutes)
-sess.add_seconds(seconds)
-
-sess.record_all_splits()
+uipath = ".//gui//d2recorder_2020-05-15.ui"
+app = QtWidgets.QApplication(sys.argv)
+recordui_wnd = d2recorderui(uipath=uipath)
+app.exec_()

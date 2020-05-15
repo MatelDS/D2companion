@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SessionRecorderGUI</class>
+ <widget class="QMainWindow" name="SessionRecorderGUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1196</width>
+    <height>1185</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>640</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>8</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>D2 Session Recorder</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QFrame" name="frame">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="lineWidth">
+         <number>2</number>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1135</width>
+           <height>984</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>3</number>
+          </property>
+          <property name="rightMargin">
+           <number>3</number>
+          </property>
+          <property name="bottomMargin">
+           <number>3</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="generalsetting_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>General Settings</string>
+            </property>
+            <property name="margin">
+             <number>4</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="wndname_label">
+            <property name="text">
+             <string>D2 window name</string>
+            </property>
+            <property name="margin">
+             <number>4</number>
+            </property>
+            <property name="indent">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="wndname">
+            <property name="text">
+             <string>Diablo II</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="dpiaware_checkBox">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="text">
+             <string>DPI-Awareness Mode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="dpiaware_label">
+            <property name="text">
+             <string>DPI awareness Mode for high resolution displays (buggy - use only when strictly needed)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="dpiawaresize_label">
+              <property name="text">
+               <string>DPI awareness Mode: Output Image Size</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="dpiaware_xres">
+              <property name="text">
+               <string>646</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="dpiaware_yres">
+              <property name="text">
+               <string>509</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="Line" name="line_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="sessionsettings_label">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Session Settings</string>
+            </property>
+            <property name="margin">
+             <number>4</number>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="char_label">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="lineWidth">
+             <number>4</number>
+            </property>
+            <property name="text">
+             <string>Character</string>
+            </property>
+            <property name="margin">
+             <number>4</number>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QComboBox" name="char_selection">
+            <item>
+             <property name="text">
+              <string>Amazon</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Assasin</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Barbarian</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Druid</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Necromancer</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Paladin</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Sorceress</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="sessionnr_label">
+            <property name="text">
+             <string>Session Number</string>
+            </property>
+            <property name="margin">
+             <number>4</number>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLCDNumber" name="session_nbr">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="frameduration_label">
+              <property name="text">
+               <string>Frame duration [seconds]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="frameduration">
+              <property name="text">
+               <string>0.1</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="9" column="0" colspan="2">
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="splitlist_label">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Splits</string>
+            </property>
+            <property name="margin">
+             <number>4</number>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QListWidget" name="splitlist"/>
+          </item>
+          <item row="11" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QPushButton" name="btn_setsplit">
+              <property name="text">
+               <string>Set Split</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="splitinput">
+              <property name="text">
+               <string>Input name of split to set/add</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_addsplit">
+              <property name="text">
+               <string>Add Split</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="12" column="1">
+           <widget class="QPushButton" name="btn_removelastsplit">
+            <property name="text">
+             <string>Remove Last Split</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <widget class="QPushButton" name="btn_nextsplit">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Next Split</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_recallsplits">
+              <property name="palette">
+               <palette>
+                <active>
+                 <colorrole role="ButtonText">
+                  <brush brushstyle="SolidPattern">
+                   <color alpha="255">
+                    <red>0</red>
+                    <green>170</green>
+                    <blue>0</blue>
+                   </color>
+                  </brush>
+                 </colorrole>
+                </active>
+                <inactive>
+                 <colorrole role="ButtonText">
+                  <brush brushstyle="SolidPattern">
+                   <color alpha="255">
+                    <red>0</red>
+                    <green>170</green>
+                    <blue>0</blue>
+                   </color>
+                  </brush>
+                 </colorrole>
+                </inactive>
+                <disabled>
+                 <colorrole role="ButtonText">
+                  <brush brushstyle="SolidPattern">
+                   <color alpha="255">
+                    <red>120</red>
+                    <green>120</green>
+                    <blue>120</blue>
+                   </color>
+                  </brush>
+                 </colorrole>
+                </disabled>
+               </palette>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Record all splits</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="14" column="0" colspan="2">
+           <widget class="Line" name="line_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0">
+           <widget class="QLabel" name="timedrecording_label">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Timed Recording</string>
+            </property>
+            <property name="margin">
+             <number>4</number>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="1">
+           <widget class="QTimeEdit" name="recordtime">
+            <property name="currentSection">
+             <enum>QDateTimeEdit::MinuteSection</enum>
+            </property>
+            <property name="displayFormat">
+             <string>mm:ss</string>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="1">
+           <widget class="QPushButton" name="btn_recordtimed">
+            <property name="palette">
+             <palette>
+              <active>
+               <colorrole role="ButtonText">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>0</red>
+                  <green>170</green>
+                  <blue>0</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </active>
+              <inactive>
+               <colorrole role="ButtonText">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>0</red>
+                  <green>170</green>
+                  <blue>0</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </inactive>
+              <disabled>
+               <colorrole role="ButtonText">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>120</red>
+                  <green>120</green>
+                  <blue>120</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </disabled>
+             </palette>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Record Timed Session</string>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="0" colspan="2">
+           <widget class="Line" name="line_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="1">
+           <widget class="QPushButton" name="btn_stopallrecordings">
+            <property name="palette">
+             <palette>
+              <active>
+               <colorrole role="ButtonText">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>255</red>
+                  <green>0</green>
+                  <blue>0</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </active>
+              <inactive>
+               <colorrole role="ButtonText">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>255</red>
+                  <green>0</green>
+                  <blue>0</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </inactive>
+              <disabled>
+               <colorrole role="ButtonText">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>120</red>
+                  <green>120</green>
+                  <blue>120</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </disabled>
+             </palette>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Stop All Recordings</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1196</width>
+     <height>38</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOption">
+    <property name="title">
+     <string>Options</string>
+    </property>
+    <addaction name="actionReset_Settings"/>
+   </widget>
+   <addaction name="menuOption"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionReset_Settings">
+   <property name="text">
+    <string>Reset Settings</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
