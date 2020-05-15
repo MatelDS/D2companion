@@ -1,17 +1,23 @@
 # D2companion
 This project aims towards making a "smart Bot" that is able to play Diablo 2 without using scripted actions or manipulating the gamestate in an malicious manner.
 
-## Utilities
+## d2recorderui
 
-### d2screenutils - ScreenCapture
-Capture the screen at certain time intevals to get "frames" of the visible gamestate.
+A basic UI that allows you to start recording your gameplay in a format that may be used for training of the models.
 
-### d2io - Mouse/Keyboard I/O
+![]docs/images/recordUI.jpg
+
+## d2io - Mouse/Keyboard/Screen I/O Utilities
 A Mouse and Keyboard input is recorded to provide a corresponding label for each recorded frame.
 The final model itself wil input via simulated mouse and keyboard actions.
 
-### d2record - Game Recording
-Basic functions to capture frames and corresponding mouse/keyboard-input labels to generate Training-Data.
+### d2screen
+Connect to your running D2 application and includes the utilities to capture the screen at certain time intevals to get "frames" of the visible gamestate.
+These images are used as features for the model training.
+
+### d2mouse/d2keyboard
+These utilities listen to mouse and keyboard inputs and save them in a format that allows to connect them to the captured frames of the d2screen class.
+These mouse/keyboard-input are used as labels in the Training-Data.
 
 ## Models
 
