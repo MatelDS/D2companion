@@ -7,7 +7,7 @@ Created on Wed May  6 14:46:54 2020
 import pandas as pd
 import os, time, threading
 
-from d2utilities.d2io import d2screen, d2mouse, d2keyboard
+from d2utilities.d2io import D2Screen, D2Mouse, D2Keyboard
 
 class d2recordsession:
     def __init__(self, char="ama", splits=["den"], frameduration=0.1,
@@ -23,10 +23,10 @@ class d2recordsession:
         self.dpiaware = dpiaware
         self.recording = None
         
-        self.screen = d2screen(wndname=self.wndname, dpiaware=self.dpiaware,
+        self.screen = D2Screen(wndname=self.wndname, dpiaware=self.dpiaware,
                                dpiaware_wndsize=dpiaware_wndsize)
-        self.mouse = d2mouse(wndname=self.wndname, dpiaware=self.dpiaware)
-        self.keyboard = d2keyboard()
+        self.mouse = D2Mouse(wndname=self.wndname, dpiaware=self.dpiaware)
+        self.keyboard = D2Keyboard()
         
     def add_minutes(self, minutes):
         '''add minutes to recording duration'''

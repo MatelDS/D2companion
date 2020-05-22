@@ -10,7 +10,7 @@ from pynput import mouse, keyboard
 from ctypes import windll
 from PIL import Image
 
-class d2screen:
+class D2Screen:
     def __init__(self, wndname="Diablo II", dpiaware=False, dpiaware_wndsize=(646,509)):
         self.wndname = wndname
         self.onlyarea = False
@@ -126,7 +126,7 @@ class d2screen:
                 #PrintWindow failed, return error=True
                 return True, None, (0,0), (0,0), (640,480)
 
-class d2mouse:
+class D2Mouse:
     def __init__(self, wndname="Diablo II", dpiaware=False):                
         self.controller = mouse.Controller()
         self.mbutton = None
@@ -134,7 +134,7 @@ class d2mouse:
         self.rloc = (0,0)
         self.wndname = "Diablo II"
         self.dpiaware = dpiaware
-        self.mscreen = d2screen(self.wndname, dpiaware=self.dpiaware)
+        self.mscreen = D2Screen(self.wndname, dpiaware=self.dpiaware)
         self.update_window_position()
 
     def start_listener(self):     
@@ -227,7 +227,7 @@ class d2mouse:
         self.listener = mouse.Listener(on_move=on_move)
         self.listener.start()
         
-class d2keyboard:
+class D2Keyboard:
     def __init__(self, allowedkeys=[]):              
         self.controller = keyboard.Controller()
         self.allowedkeys = allowedkeys
